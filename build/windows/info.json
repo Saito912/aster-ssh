@@ -1,0 +1,15 @@
+{
+  "fixed": {
+    "file_version": "1.0.3.0"
+  },
+  "info": {
+    "0000": {
+      "ProductName": "Aster SSH",
+      "FileDescription": "Aster SSH - SSH and SFTP Client",
+      "CompanyName": "Aster SSH",
+      "ProductVersion": "1.0.3",
+      "FileVersion": "1.0.3",
+      "LegalCopyright": "Copyright 2026 Aster SSH"
+    }
+  }
+}

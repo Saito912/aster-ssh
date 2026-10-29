@@ -1,0 +1,571 @@
+:root {
+  color: #354252;
+  background: #f2f3f5;
+  --bg: #f2f3f5;
+  --sidebar: #ebeef1;
+  --rail: #e4e8ec;
+  --surface: #e6ebf0;
+  --border: #d2d8df;
+  --text: #354252;
+  --muted: #5c6878;
+  --secondary: #526276;
+  --accent: #516f8a;
+  --accent-soft: #dfe7ef;
+  --terminal: #edf0f3;
+  --terminal-foreground: #344253;
+  --terminal-muted: #5f6d7e;
+  --terminal-scrollbar: #b6c2ce;
+  --graph-cpu: #6f869f;
+  --graph-memory: #7f96ad;
+  --graph-network: #668c7b;
+  --graph-network-secondary: #8ba69a;
+  --green: #517d68;
+  --action-background: #526f88;
+  --action-foreground: #f8fafb;
+  --shadow: 0 16px 50px #2e3e4a1a;
+}
+
+body.light {
+  background: var(--bg);
+}
+.light .host-card:hover,
+.light .rail-button:hover {
+  background: #e2e8ee;
+}
+.light .host-card.active {
+  background: #dfe7ee;
+  border-color: #aebdcb;
+  box-shadow: none;
+}
+.light .host-symbol,
+.light .host-card.active .host-symbol,
+.light .sidebar-heading h1 > span,
+.light .server-avatar,
+.light .avatar,
+.light .rail-button.active {
+  background: #dde5ed;
+  color: #516d85;
+  border-color: #c0cedb;
+}
+.light .avatar {
+  border-color: var(--sidebar);
+}
+.light .host-detail > span,
+.light .group-title,
+.light .group-title .group-count,
+.light .connection-search,
+.light .connection-search input::placeholder,
+.light .sidebar-footer,
+.light .sidebar-footer strong,
+.light .sidebar-footer div > span,
+.light .sidebar-empty,
+.light .sidebar-empty > span,
+.light .sidebar-empty > .icon,
+.light .add-connection,
+.light .session-tab,
+.light .session-location #session-address {
+  color: var(--muted);
+}
+.light .connection-search {
+  background: #f2f4f6;
+}
+.light .host-card.active .host-detail strong,
+.light .session-tab.active,
+.light .session-location strong,
+.light .file-name {
+  color: var(--text);
+}
+.light .add-connection,
+.light .server-avatar {
+  border-color: var(--border);
+}
+.light .sidebar-filter button.active,
+.light .file-panel-tabs > div > button.active {
+  color: #496780;
+}
+.light .sidebar-filter button.active:after,
+.light .file-panel-tabs > div > button.active:after {
+  background: #718ca4;
+}
+.light .session-tab.active {
+  box-shadow: inset 0 2px #718ca4;
+}
+.light .environment-badge {
+  color: #796449;
+  background: #ece6dc;
+  border-color: #d6caba;
+}
+.light .button-primary,
+.light .welcome-actions .button-primary {
+  background: var(--action-background);
+  color: var(--action-foreground);
+}
+.light .button-primary:hover,
+.light .welcome-actions .button-primary:hover {
+  background: #47627b;
+}
+.light .button-primary.danger {
+  background: #956363;
+  color: #fff6f6;
+}
+.light .button-secondary,
+.light .welcome-actions .button-secondary {
+  background: #dce5ed;
+  color: #3e566d;
+}
+.light .primary-soft,
+.light .form-note {
+  background: #e1e8ef;
+  color: #405d76;
+}
+.light .toggle {
+  background: #b7c2cd;
+}
+.light .toggle.on {
+  background: #66829b;
+}
+.light .toggle:after {
+  background: #f4f6f8;
+}
+.light .danger-text {
+  color: #925458 !important;
+}
+.light .welcome-mark {
+  color: #6a829a;
+}
+.light .welcome-screen {
+  color: var(--text);
+}
+.light .welcome-screen p,
+.light .welcome-tip,
+.light .terminal-small,
+.light .connection-health.offline {
+  color: var(--muted);
+}
+.light .file-table td {
+  color: #4d5d70;
+  border-color: #d8dfe6;
+}
+.light .file-table td:first-child {
+  color: var(--text);
+}
+.light .file-table th,
+.light .file-table th button,
+.light .file-table td:nth-child(4),
+.light .file-status {
+  color: var(--muted);
+}
+.light .file-name.folder .icon {
+  color: #63809b;
+  stroke: #63809b;
+  fill: #dbe5ef;
+}
+.light .file-name .icon {
+  color: #62768d;
+}
+.light .file-name.script .icon {
+  color: #557d68;
+}
+.light .file-table tr:hover td {
+  background: #e3e9ef;
+}
+.light .status-separator,
+.light .files-resizer:after {
+  background: #c4cdd7;
+}
+.light .terminal-area {
+  border: 1px solid #ccd5df;
+}
+.light .terminal-footnote {
+  background: var(--terminal);
+  border-color: #ccd5df;
+  color: var(--terminal-muted);
+}
+.light .terminal-pane-heading,
+.light .live-terminal .terminal-pane-heading > span:last-of-type,
+.light .terminal-pane-heading button {
+  border-color: #ccd5df;
+  color: #5b6c7e;
+}
+.light .terminal-pane-heading > span:first-child,
+.light .is-split .terminal-pane + .terminal-pane {
+  border-color: #ccd5df;
+}
+.light .terminal-search-bar {
+  background: #e0e7ee;
+  border-color: #aebdcb;
+  color: var(--text);
+}
+.light .terminal-search-bar input {
+  color: var(--text);
+}
+.light .terminal-search-bar input::placeholder,
+.light .terminal-search-bar .icon-button,
+.light .terminal-search-bar > span:nth-last-child(2) {
+  color: var(--muted);
+}
+.light .terminal-search-bar .icon-button:hover {
+  background: #ccd8e3;
+}
+.light .server-identity div > span,
+.light .server-specs,
+.light .metric-label,
+.light .metric-label > span:first-child,
+.light .metric-value > span,
+.light .metric-value .metric-note,
+.light .memory-legend,
+.light .network-values > div > span,
+.light .network-values small,
+.light .chart-axis,
+.light .live-label,
+.light .monitor-footer,
+.light .monitor-footer strong {
+  color: var(--muted);
+}
+.light .metric-value strong,
+.light .network-values strong,
+.light .disk-capacity strong {
+  color: var(--text);
+}
+.light .memory-bar,
+.light .disk-bar {
+  background: #d8e0e7;
+}
+.light .memory-bar > span,
+.light .memory-legend i,
+.light .disk-bar > span {
+  background: var(--graph-memory);
+}
+.light .metric-dot.violet {
+  background: var(--graph-cpu);
+}
+.light .metric-dot.blue {
+  background: var(--graph-memory);
+}
+.light .metric-dot.mint {
+  background: var(--graph-network);
+}
+.light .cpu-chart .line {
+  stroke: var(--graph-cpu);
+}
+.light #cpu-fill stop {
+  stop-color: var(--graph-cpu);
+}
+.light .network-chart .line {
+  stroke: var(--graph-network);
+}
+.light .network-chart .secondary {
+  stroke: var(--graph-network-secondary);
+}
+.light .disk-bar.high > span {
+  background: #a78d60;
+}
+.light .disk-bar.critical > span {
+  background: #ad7677;
+}
+.light .network-values .icon {
+  color: #557d68;
+}
+.light .network-values > div:last-child .icon {
+  color: #62768d;
+}
+.light .disk-inventory-row .device-state.unmounted {
+  color: #806333;
+}
+.light .app-status,
+.light .app-status button,
+.light .toast {
+  color: var(--muted);
+}
+.light .toast.error .icon {
+  color: #925458;
+}
+.light ::selection {
+  background: #cedae5;
+  color: #273849;
+}
+
+body.dark {
+  --bg: #27313e;
+  --sidebar: #242d3a;
+  --rail: #202834;
+  --surface: #303c4b;
+  --border: #3a4656;
+  --text: #cfd7e1;
+  --muted: #9aa8ba;
+  --secondary: #b0bdcd;
+  --accent: #a1b7cc;
+  --accent-soft: #344454;
+  --terminal: #202834;
+  --terminal-foreground: #cbd4df;
+  --terminal-muted: #a0adbd;
+  --terminal-scrollbar: #566779;
+  --graph-cpu: #9baec5;
+  --graph-memory: #91a7bf;
+  --graph-network: #96b4a8;
+  --graph-network-secondary: #7f9993;
+  --green: #96b7a8;
+  --action-background: #506b84;
+  --action-foreground: #edf1f5;
+  --shadow: 0 16px 50px #10172266;
+  background: var(--bg);
+}
+
+.dark .host-card:hover,
+.dark .rail-button:hover,
+.dark .host-card.active {
+  background: #303d4c;
+}
+.dark .host-card.active {
+  border-color: #4a5a6d;
+  box-shadow: none;
+}
+.dark .host-symbol,
+.dark .host-card.active .host-symbol,
+.dark .sidebar-heading h1 > span,
+.dark .server-avatar,
+.dark .avatar,
+.dark .rail-button.active {
+  background: #354455;
+  color: #aec2d5;
+  border-color: #455568;
+}
+.dark .avatar {
+  border-color: var(--sidebar);
+}
+.dark .host-detail > span,
+.dark .group-title,
+.dark .group-title .group-count,
+.dark .connection-search,
+.dark .connection-search input::placeholder,
+.dark .sidebar-footer,
+.dark .sidebar-footer strong,
+.dark .sidebar-footer div > span,
+.dark .sidebar-empty,
+.dark .sidebar-empty > span,
+.dark .sidebar-empty > .icon,
+.dark .add-connection,
+.dark .session-tab,
+.dark .session-location #session-address {
+  color: var(--muted);
+}
+.dark .connection-search {
+  background: #293441;
+}
+.dark .host-card.active .host-detail strong,
+.dark .session-tab.active,
+.dark .session-location strong,
+.dark .file-name {
+  color: var(--text);
+}
+.dark .add-connection,
+.dark .server-avatar {
+  border-color: var(--border);
+}
+.dark .sidebar-filter button.active,
+.dark .file-panel-tabs > div > button.active {
+  color: #b0c4d7;
+}
+.dark .sidebar-filter button.active:after,
+.dark .file-panel-tabs > div > button.active:after {
+  background: #91a9bf;
+}
+.dark .session-tab.active {
+  box-shadow: inset 0 2px #8fa7bd;
+}
+.dark .environment-badge {
+  color: #c7b89a;
+  background: #3a3935;
+  border-color: #514d42;
+}
+.dark .button-primary,
+.dark .welcome-actions .button-primary {
+  background: var(--action-background);
+  color: var(--action-foreground);
+}
+.dark .button-primary:hover,
+.dark .welcome-actions .button-primary:hover {
+  background: #5a7690;
+}
+.dark .button-primary.danger {
+  background: #815b62;
+  color: #f0e4e5;
+}
+.dark .button-secondary,
+.dark .welcome-actions .button-secondary {
+  background: #354455;
+  color: #c3d0dd;
+}
+.dark .primary-soft,
+.dark .form-note {
+  background: #334352;
+  color: #bfd0df;
+}
+.dark .toggle {
+  background: #465467;
+}
+.dark .toggle.on {
+  background: #607e99;
+}
+.dark .toggle:after {
+  background: #c7d1dd;
+}
+.dark .danger-text {
+  color: #d2a1a1 !important;
+}
+.dark .welcome-mark {
+  color: #a2b7cd;
+}
+.dark .welcome-screen {
+  color: var(--text);
+}
+.dark .welcome-screen p,
+.dark .welcome-tip,
+.dark .terminal-small,
+.dark .connection-health.offline {
+  color: var(--muted);
+}
+.dark .file-table td {
+  color: #b5c0cf;
+  border-color: #344150;
+}
+.dark .file-table td:first-child {
+  color: var(--text);
+}
+.dark .file-table th,
+.dark .file-table th button,
+.dark .file-table td:nth-child(4),
+.dark .file-status {
+  color: var(--muted);
+}
+.dark .file-name.folder .icon {
+  color: #a6bad0;
+  stroke: #a6bad0;
+  fill: #354658;
+}
+.dark .file-name .icon {
+  color: #a1b1c5;
+}
+.dark .file-name.script .icon {
+  color: #9cb9a9;
+}
+.dark .file-table tr:hover td {
+  background: #303d4c;
+}
+.dark .status-separator,
+.dark .files-resizer:after {
+  background: #455266;
+}
+.dark .terminal-area {
+  border: 1px solid #3a4656;
+}
+.dark .terminal-footnote {
+  background: var(--terminal);
+  border-color: #364151;
+  color: #a0adbf;
+}
+.dark .terminal-pane-heading {
+  border-color: #3a4656;
+  color: #b1bdce;
+}
+.dark .terminal-search-bar {
+  background: #334252;
+  border-color: #506177;
+}
+.dark .terminal-search-bar input {
+  color: #d6e0eb;
+}
+.dark .terminal-search-bar input::placeholder,
+.dark .terminal-search-bar .icon-button {
+  color: #b1bfd0;
+}
+.dark .terminal-search-bar > span:nth-last-child(2) {
+  color: #b2c0d1;
+}
+.dark .terminal-search-bar .icon-button:hover {
+  background: #415266;
+}
+.xterm .xterm-viewport {
+  scrollbar-color: var(--terminal-scrollbar) var(--terminal);
+}
+.dark .server-identity div > span,
+.dark .server-specs,
+.dark .metric-label,
+.dark .metric-label > span:first-child,
+.dark .metric-value > span,
+.dark .metric-value .metric-note,
+.dark .memory-legend,
+.dark .network-values > div > span,
+.dark .network-values small,
+.dark .chart-axis,
+.dark .live-label,
+.dark .monitor-footer,
+.dark .monitor-footer strong {
+  color: var(--muted);
+}
+.dark .metric-value strong,
+.dark .network-values strong,
+.dark .disk-capacity strong {
+  color: #cfd8e2;
+}
+.dark .memory-bar,
+.dark .disk-bar {
+  background: #394657;
+}
+.dark .memory-bar > span,
+.dark .memory-legend i {
+  background: var(--graph-memory);
+}
+.dark .metric-dot.violet {
+  background: var(--graph-cpu);
+}
+.dark .metric-dot.blue {
+  background: var(--graph-memory);
+}
+.dark .metric-dot.mint {
+  background: var(--graph-network);
+}
+.dark .cpu-chart .line {
+  stroke: var(--graph-cpu);
+}
+.dark #cpu-fill stop {
+  stop-color: var(--graph-cpu);
+}
+.dark .network-chart .line {
+  stroke: var(--graph-network);
+}
+.dark .network-chart .secondary {
+  stroke: var(--graph-network-secondary);
+}
+.dark .disk-bar > span {
+  background: #94a8bf;
+}
+.dark .disk-bar.high > span {
+  background: #b4a17e;
+}
+.dark .disk-bar.critical > span {
+  background: #bd9292;
+}
+.dark .network-values .icon {
+  color: #9fbcaf;
+}
+.dark .network-values > div:last-child .icon {
+  color: #a1b1c3;
+}
+.dark .disk-inventory-row .device-state.unmounted {
+  color: #c6b28e;
+}
+.dark .app-status,
+.dark .app-status button {
+  color: var(--muted);
+}
+.dark .toast {
+  color: var(--text);
+}
+.dark .toast.error .icon {
+  color: #d2a1a1;
+}
+.dark ::selection {
+  background: #465b71;
+  color: #e0e6ed;
+}

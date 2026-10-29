@@ -1,0 +1,8 @@
+{
+  "name": "aster-ssh-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Aster SSH desktop interaction prototype",
+  "scripts": { "dev": "node server.mjs", "start": "node server.mjs" },
+  "type": "module"
+}

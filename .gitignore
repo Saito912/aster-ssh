@@ -1,0 +1,28 @@
+# Local toolchains, caches and isolated profiles (may contain credentials).
+/.tools/
+/dist/
+/frontend/node_modules/
+/frontend/wailsjs/
+
+# Generated native build and package verification output.
+/build/bin/
+/build/packaging/
+/build/package-check*/
+
+# Publish the current downloadable version; keep old local packages out of Git.
+/releases/*
+!/releases/1.0.3/
+
+# Local secrets and session output.
+.env
+.env.*
+*.pem
+*.key
+*.ppk
+/config.json
+/known_hosts*
+/id_*
+*.syso
+*.log
+.DS_Store
+Thumbs.db

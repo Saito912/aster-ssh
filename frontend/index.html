@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f2f3f5" />
+    <title>Aster SSH · 轻盈连接，自在掌控</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%235969e8'/%3E%3Cpath d='M20 9v22M10.5 14.5l19 11M10.5 25.5l19-11' stroke='white' stroke-width='3.5'/%3E%3C/svg%3E"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' ws: wails:; object-src 'none'; base-uri 'none'"
+    />
+    <link rel="stylesheet" href="./app.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body class="light">
+    <div class="app-shell">
+      <nav class="activity-rail" aria-label="主导航">
+        <div class="rail-top">
+          <button
+            class="rail-button active"
+            data-action="sessions"
+            aria-label="连接管理"
+            title="连接管理"
+          >
+            <span data-icon="panels"></span></button
+          ><button
+            class="rail-button"
+            data-action="snippets"
+            aria-label="快捷命令"
+            title="快捷命令"
+          >
+            <span data-icon="code"></span></button
+          ><button
+            class="rail-button"
+            data-action="transfers"
+            aria-label="传输任务"
+            title="传输任务"
+          >
+            <span data-icon="transfer"></span
+            ><span class="rail-notification" hidden></span>
+          </button>
+        </div>
+        <div class="rail-bottom">
+          <button
+            class="rail-button"
+            data-action="shortcuts"
+            title="快捷键与帮助"
+            aria-label="快捷键与帮助"
+          >
+            <span data-icon="help"></span></button
+          ><button
+            class="rail-button"
+            data-action="settings"
+            title="偏好设置"
+            aria-label="偏好设置"
+          >
+            <span data-icon="settings"></span>
+          </button>
+          <div class="avatar" title="本地工作空间">L</div>
+        </div>
+      </nav>
+
+      <aside
+        class="connections-sidebar"
+        id="connections-sidebar"
+        aria-label="连接管理"
+      >
+        <div class="sidebar-heading">
+          <h1>连接管理 <span id="host-count">0</span></h1>
+          <button
+            class="icon-button"
+            data-action="collapse-connections"
+            title="收起连接管理"
+            aria-label="收起连接管理"
+          >
+            <span
+              data-icon="chevron-right"
+              class="collapse-connection-icon"
+            ></span>
+          </button>
+          <button
+            class="icon-button"
+            data-action="new-host"
+            title="新建连接"
+            aria-label="新建连接"
+          >
+            <span data-icon="plus"></span>
+          </button>
+        </div>
+        <label class="connection-search"
+          ><span data-icon="search"></span
+          ><input
+            id="host-search"
+            placeholder="搜索名称、IP 或标签"
+            aria-label="搜索连接"
+          /><kbd>/</kbd></label
+        >
+        <div class="sidebar-filter">
+          <button class="active" data-filter="all">全部连接</button
+          ><button data-filter="favorites">
+            <span data-icon="star"></span>收藏
+          </button>
+        </div>
+        <div id="host-groups" class="host-groups"></div>
+        <button class="add-connection" data-action="new-host">
+          <span data-icon="plus"></span>添加新连接</button
+        ><button class="sidebar-import" data-action="import">
+          <span data-icon="download"></span>导入连接配置
+        </button>
+        <div class="sidebar-footer">
+          <span class="little-lock" data-icon="shield"></span>
+          <div>
+            <strong>你的连接，只属于你</strong><span>配置保存在当前设备</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-workspace">
+        <div class="session-tabs">
+          <button
+            class="icon-button connections-toggle"
+            id="connections-toggle"
+            data-action="connections"
+            title="收起连接栏"
+            aria-label="收起连接栏"
+            aria-controls="connections-sidebar"
+            aria-expanded="true"
+          >
+            <span data-icon="panels"></span>
+          </button>
+          <div id="tabs" role="tablist" aria-label="SSH 会话"></div>
+          <button
+            class="new-tab icon-button"
+            data-action="palette"
+            title="打开连接"
+            aria-label="打开连接"
+          >
+            <span data-icon="plus"></span>
+          </button>
+          <div class="tabs-end tab-utilities">
+            <button
+              class="icon-button"
+              data-action="palette"
+              title="快速查找连接 (Ctrl+K)"
+              aria-label="快速查找连接"
+            >
+              <span data-icon="search"></span></button
+            ><button
+              class="icon-button"
+              data-action="theme"
+              title="切换深浅主题"
+              aria-label="切换深浅主题"
+            >
+              <span data-icon="sun"></span>
+            </button>
+          </div>
+        </div>
+        <div class="workspace-toolbar">
+          <div class="session-location">
+            <span class="terminal-small" data-icon="terminal"></span
+            ><strong id="toolbar-name">prod-web-01</strong
+            ><span class="subtle-divider"></span
+            ><span id="session-address">root@10.24.8.12</span
+            ><span class="environment-badge" id="environment-label"
+              >生产环境</span
+            >
+          </div>
+          <div class="toolbar-actions">
+            <span class="connection-health"
+              ><i></i><span id="latency">24 ms</span></span
+            ><button
+              class="icon-button"
+              data-action="reconnect"
+              title="重新连接"
+              aria-label="重新连接"
+            >
+              <span data-icon="refresh"></span></button
+            ><button
+              class="icon-button"
+              data-action="log"
+              title="记录会话日志"
+              aria-label="记录会话日志"
+            >
+              <span data-icon="file"></span></button
+            ><button
+              class="icon-button"
+              data-action="tunnels"
+              title="端口转发"
+              aria-label="端口转发"
+            >
+              <span data-icon="transfer"></span></button
+            ><button
+              class="icon-button"
+              data-action="terminal-search"
+              title="搜索终端 Ctrl+F"
+              aria-label="搜索终端"
+            >
+              <span data-icon="search"></span></button
+            ><button
+              class="icon-button"
+              data-action="split"
+              title="切换终端分屏"
+              aria-label="切换终端分屏"
+              aria-pressed="false"
+            >
+              <span data-icon="split"></span></button
+            ><button
+              class="icon-button monitor-toggle selected"
+              data-action="monitor"
+              title="显示或隐藏监控"
+              aria-label="显示或隐藏监控"
+              aria-pressed="true"
+            >
+              <span data-icon="chart"></span>
+            </button>
+          </div>
+        </div>
+        <div id="terminal-search-bar" class="terminal-search-bar" hidden>
+          <span data-icon="search"></span
+          ><input
+            id="terminal-search-input"
+            placeholder="查找终端内容…"
+            aria-label="查找终端内容"
+          /><span id="terminal-search-count"></span
+          ><button
+            class="icon-button"
+            data-action="close-terminal-search"
+            aria-label="关闭搜索"
+          >
+            <span data-icon="x"></span>
+          </button>
+        </div>
+        <div id="terminal-area" class="terminal-area">
+          <div id="empty-workspace" class="welcome-screen">
+            <span class="welcome-mark">✳</span>
+            <h1>你的服务器，一个自在的工作台。</h1>
+            <p>
+              安全连接、流畅终端、顺手的文件管理。<br />从添加你的第一台服务器开始。
+            </p>
+            <div class="welcome-actions">
+              <button class="button-primary" data-action="new-host">
+                新建 SSH 连接</button
+              ><button class="button-secondary" data-action="import">
+                导入连接
+              </button>
+            </div>
+            <span class="welcome-tip"
+              >Ctrl K 快速查找 · 配置与凭据保留在你的设备</span
+            >
+          </div>
+        </div>
+        <div
+          class="files-resizer"
+          title="拖动调整文件面板高度"
+          role="separator"
+          aria-orientation="horizontal"
+          aria-label="调整文件面板高度"
+          tabindex="0"
+        ></div>
+        <section class="files-panel" aria-label="文件与传输">
+          <div class="file-panel-tabs">
+            <div>
+              <button class="active" data-panel="files">
+                <span data-icon="folder"></span>文件管理</button
+              ><button data-panel="transfers">
+                <span data-icon="transfer"></span>传输队列<span
+                  class="count-badge"
+                  id="transfer-count"
+                  >0</span
+                ></button
+              ><button data-panel="snippets">
+                <span data-icon="code"></span>快捷命令
+              </button>
+            </div>
+            <button
+              class="icon-button"
+              data-action="files-collapse"
+              title="收起文件面板"
+              aria-label="收起文件面板"
+            >
+              <span data-icon="chevron-down"></span>
+            </button>
+          </div>
+          <div id="files-view" class="panel-content">
+            <div class="file-toolbar">
+              <div class="path-controls">
+                <button
+                  class="icon-button"
+                  data-file-action="up"
+                  title="上一级目录"
+                  aria-label="上一级目录"
+                >
+                  <span data-icon="arrow-up"></span></button
+                ><button
+                  class="icon-button"
+                  data-file-action="home"
+                  title="主目录"
+                  aria-label="主目录"
+                >
+                  <span data-icon="home"></span>
+                </button>
+                <div class="path-breadcrumbs" id="file-path"></div>
+                <button
+                  class="icon-button"
+                  data-file-action="path"
+                  title="跳转路径"
+                  aria-label="跳转路径"
+                >
+                  <span data-icon="edit"></span>
+                </button>
+              </div>
+              <div class="file-actions">
+                <button
+                  class="icon-button"
+                  id="toggle-hidden"
+                  data-file-action="hidden"
+                  title="显示或隐藏点文件"
+                  aria-label="显示或隐藏点文件"
+                >
+                  <span data-icon="file"></span></button
+                ><button class="text-button" data-file-action="new-folder">
+                  <span data-icon="folder-plus"></span>新建文件夹</button
+                ><button
+                  class="text-button primary-soft"
+                  data-file-action="upload"
+                >
+                  <span data-icon="upload"></span>上传文件</button
+                ><button
+                  class="icon-button"
+                  data-file-action="refresh"
+                  title="刷新文件列表"
+                  aria-label="刷新文件列表"
+                >
+                  <span data-icon="refresh"></span>
+                </button>
+              </div>
+            </div>
+            <div class="file-table-scroll">
+              <table class="file-table">
+                <thead>
+                  <tr>
+                    <th>
+                      <button data-sort="name">
+                        名称<span data-icon="chevron-down"></span>
+                      </button>
+                    </th>
+                    <th><button data-sort="size">大小</button></th>
+                    <th><button data-sort="date">修改时间</button></th>
+                    <th>权限</th>
+                    <th class="file-row-actions">操作</th>
+                  </tr>
+                </thead>
+                <tbody id="file-list"></tbody>
+              </table>
+            </div>
+            <div class="file-status">
+              <span id="file-summary"></span
+              ><button
+                id="download-directory"
+                data-file-action="download-directory"
+                class="download-directory"
+                title="选择本地接收目录"
+              >
+                接收目录：点击选择</button
+              ><span><i></i><span id="sftp-status">等待连接</span></span>
+            </div>
+          </div>
+          <div id="transfers-view" class="panel-content" hidden></div>
+          <div id="snippets-view" class="panel-content" hidden></div>
+        </section>
+      </main>
+
+      <aside class="monitor-sidebar" aria-label="服务器监控">
+        <div class="monitor-title">
+          <h2>服务器概览</h2>
+          <span class="live-label"><i></i>实时</span
+          ><button
+            class="icon-button monitor-dismiss"
+            data-action="monitor"
+            title="收起服务器概览"
+            aria-label="收起服务器概览"
+          >
+            <span data-icon="x"></span>
+          </button>
+        </div>
+        <div class="server-identity">
+          <div class="server-avatar"><span data-icon="server"></span></div>
+          <div>
+            <h3 id="monitor-host">prod-web-01</h3>
+            <span id="monitor-os">Ubuntu 24.04 LTS</span>
+          </div>
+          <span class="online-dot"></span>
+        </div>
+        <div class="server-specs">
+          <span><span data-icon="cpu"></span>4 vCPU</span
+          ><span><span data-icon="memory"></span>8 GB RAM</span>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">
+            <span><i class="metric-dot violet"></i>CPU 使用率</span
+            ><span>4 核</span>
+          </div>
+          <div class="metric-value">
+            <strong id="cpu-value">12.4</strong><span>%</span
+            ><span class="metric-note">运行平稳</span>
+          </div>
+          <svg
+            class="sparkline cpu-chart"
+            viewBox="0 0 220 52"
+            preserveAspectRatio="none"
+            aria-label="CPU 使用趋势"
+          >
+            <defs>
+              <linearGradient id="cpu-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#8276ef" stop-opacity=".24" />
+                <stop offset="100%" stop-color="#8276ef" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <path class="area" fill="url(#cpu-fill)" />
+            <path
+              class="line"
+              fill="none"
+              stroke="#8b7ce9"
+              stroke-width="1.8"
+            />
+          </svg>
+          <div class="chart-axis"><span>60 秒前</span><span>现在</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">
+            <span><i class="metric-dot blue"></i>内存使用率</span
+            ><span>8 GB</span>
+          </div>
+          <div class="metric-value">
+            <strong id="memory-value">36.8</strong><span>%</span
+            ><span class="metric-note">2.94 / 8 GB</span>
+          </div>
+          <div class="memory-bar"><span></span></div>
+          <div class="memory-legend">
+            <span><i></i>已使用</span><span>可用 5.06 GB</span>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">
+            <span><i class="metric-dot mint"></i>网络流量</span
+            ><span>全部接口</span>
+          </div>
+          <div class="network-values">
+            <div>
+              <span><span data-icon="arrow-down"></span>接收</span
+              ><strong id="network-down">1.24 <small>MB/s</small></strong>
+            </div>
+            <div>
+              <span><span data-icon="arrow-up"></span>发送</span
+              ><strong id="network-up">286 <small>KB/s</small></strong>
+            </div>
+          </div>
+          <svg
+            class="sparkline network-chart"
+            viewBox="0 0 220 42"
+            preserveAspectRatio="none"
+            aria-label="网络流量趋势"
+          >
+            <path
+              class="line"
+              fill="none"
+              stroke="#4db69a"
+              stroke-width="1.8"
+            />
+            <path
+              class="secondary"
+              fill="none"
+              stroke="#a4c8bd"
+              stroke-width="1.4"
+              stroke-dasharray="3 3"
+            />
+          </svg>
+        </div>
+        <section class="metric-card disk-card" aria-label="磁盘空间">
+          <div class="metric-label">
+            <span><span data-icon="disk"></span>磁盘空间</span
+            ><span id="disk-count">—</span>
+          </div>
+          <div id="disk-list" class="disk-list">
+            <p class="storage-empty">连接服务器后显示磁盘和挂载点</p>
+          </div>
+        </section>
+        <div class="monitor-footer">
+          <span data-icon="clock"></span
+          ><span>已运行 <strong>28 天 16 小时</strong></span>
+        </div>
+      </aside>
+      <footer class="app-status">
+        <div>
+          <span class="status-brand" data-icon="shield"></span
+          ><span id="connection-count">2 个活跃会话</span
+          ><span class="status-separator"></span
+          ><span id="app-state">本地客户端</span>
+        </div>
+        <div>
+          <span>SSH / SFTP · Windows 本地客户端</span
+          ><span class="status-separator"></span
+          ><button data-action="shortcuts">快捷键 <kbd>?</kbd></button>
+        </div>
+      </footer>
+    </div>
+    <div class="modal-backdrop" id="modal-backdrop" hidden>
+      <section
+        class="modal"
+        id="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      ></section>
+    </div>
+    <div class="toast-stack" id="toasts" role="status" aria-live="polite"></div>
+  </body>
+</html>

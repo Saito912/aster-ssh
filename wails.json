@@ -1,0 +1,19 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "Aster SSH",
+  "outputfilename": "AsterSSH",
+  "frontend:dir": "frontend",
+  "frontend:install": "",
+  "frontend:build": "node build.mjs",
+  "author": {
+    "name": "Aster SSH",
+    "email": ""
+  },
+  "info": {
+    "companyName": "Aster SSH",
+    "productName": "Aster SSH",
+    "productVersion": "1.0.3",
+    "copyright": "Copyright © 2026 Aster SSH",
+    "comments": "SSH and SFTP desktop client"
+  }
+}

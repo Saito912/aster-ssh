@@ -1,0 +1,245 @@
+:root {
+  --navigation-width: 60px;
+  --connections-width: 248px;
+  --inspector-width: 274px;
+}
+
+/* The native title bar already provides the app title and window controls. */
+.app-shell,
+.monitor-hidden .app-shell {
+  grid-template-columns:
+    var(--navigation-width) var(--connections-width)
+    minmax(0, 1fr) var(--inspector-width);
+  grid-template-rows: minmax(0, 1fr) 30px;
+}
+.activity-rail {
+  grid-column: 1;
+  grid-row: 1;
+}
+.connections-sidebar {
+  grid-column: 2;
+  grid-row: 1;
+}
+.main-workspace {
+  grid-column: 3;
+  grid-row: 1;
+}
+.monitor-sidebar {
+  grid-column: 4;
+  grid-row: 1;
+}
+.app-status {
+  grid-row: 2;
+}
+body.connections-collapsed {
+  --connections-width: 0px;
+}
+body.monitor-hidden {
+  --inspector-width: 0px;
+}
+.connections-toggle {
+  width: 30px;
+  height: 30px;
+  margin: 8px 6px;
+}
+.connections-toggle[aria-expanded="true"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.collapse-connection-icon {
+  transform: rotate(180deg);
+}
+.sidebar-heading h1 {
+  margin-right: auto;
+}
+.sidebar-heading {
+  gap: 3px;
+}
+.tab-utilities {
+  gap: 5px;
+  padding: 0 10px;
+  flex-shrink: 0;
+}
+.tab-utilities .icon-button {
+  width: 28px;
+  height: 28px;
+}
+.tab-utilities .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.disk-list {
+  min-width: 0;
+}
+.disk-volume + .disk-volume {
+  border-top: 1px solid var(--border);
+  margin-top: 15px;
+  padding-top: 14px;
+}
+.disk-volume-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+.disk-volume-heading strong {
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--text);
+  min-width: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.disk-volume-heading > span {
+  margin-left: auto;
+  color: var(--secondary);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.disk-device-name {
+  color: var(--secondary);
+  font-size: 10px;
+  line-height: 1.6;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.disk-capacity {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: 8px;
+  color: var(--secondary);
+}
+.disk-capacity strong {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+}
+.disk-capacity > span {
+  font-size: 11px;
+}
+.disk-volume .disk-bar {
+  margin-top: 9px;
+}
+.disk-bar.high > span {
+  background: #c0a478;
+}
+.disk-bar.critical > span {
+  background: #cf8284;
+}
+.disk-available {
+  color: var(--secondary);
+  font-size: 10px;
+  margin-top: 7px;
+  line-height: 1.6;
+}
+.storage-empty,
+.storage-note {
+  font-size: 10px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.storage-note {
+  margin-top: 12px;
+}
+.disk-inventory {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: 14px;
+}
+.disk-inventory > summary {
+  font-size: 11px;
+  color: var(--secondary);
+  cursor: pointer;
+  line-height: 1.8;
+}
+.disk-inventory-row {
+  margin-top: 12px;
+  font-size: 10px;
+}
+.disk-inventory-row > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: baseline;
+}
+.disk-inventory-row > div + div {
+  margin-top: 5px;
+}
+.disk-inventory-row strong {
+  font-family: Consolas, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.disk-inventory-row small {
+  font-size: 9px;
+  color: var(--muted);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.disk-inventory-row > div > span {
+  white-space: nowrap;
+  flex-shrink: 0;
+  color: var(--secondary);
+}
+.disk-inventory-row .device-state.unmounted {
+  color: #b09268;
+}
+.disk-inventory-row.partition {
+  padding-left: 9px;
+  border-left: 2px solid var(--border);
+}
+.disk-card {
+  flex-shrink: 0;
+}
+
+@media (min-width: 1700px) {
+  :root {
+    --navigation-width: 64px;
+    --connections-width: 260px;
+    --inspector-width: 290px;
+  }
+}
+@media (max-width: 1220px) {
+  :root {
+    --navigation-width: 54px;
+    --connections-width: 223px;
+    --inspector-width: 242px;
+  }
+}
+@media (max-width: 1050px) {
+  :root {
+    --navigation-width: 52px;
+    --inspector-width: 0px;
+  }
+  .monitor-sidebar {
+    top: 0;
+    bottom: 30px;
+  }
+  body:not(.monitor-hidden) .main-workspace:after {
+    top: 46px;
+  }
+}
+@media (max-width: 720px) {
+  :root {
+    --navigation-width: 48px;
+    --connections-width: 0px;
+  }
+  .connections-sidebar.mobile-visible {
+    top: 0;
+    left: var(--navigation-width);
+    bottom: 30px;
+  }
+  .tabs-end.tab-utilities {
+    display: flex;
+    gap: 1px;
+    padding: 0 5px;
+  }
+  .tab-utilities .icon-button {
+    width: 25px;
+  }
+}
